@@ -1,0 +1,88 @@
+<style>
+  .Yorder {
+    background-color: bisque;
+    margin-top: 0px;
+    height: 200px;
+    padding: 20px;
+    border: 1px solid #dadada;
+    margin-left: 100px;
+  }
+</style>
+<div class="container">
+  <div class="title">
+    <h2>Product Order Form</h2>
+  </div>
+  <div class="d-flex">
+    <form id="checkout-form" action="/place-order" method="post">
+      <label>
+        <span>Address <span class="required"></span></span>
+        <br>
+        <input type="text" name="address">
+      </label>
+      <br>
+      <label>
+        <span>Postcode / ZIP <span class="required"></span></span>
+        <br>
+        <input type="text" name="pincode">
+      </label>
+      <br>
+      <label>
+        <span>Phone <span class="required"></span></span>
+        <br>
+        <input type="tel" name="mobile">
+      </label>
+      <input type="text" name="userId" id="" value="{{total.userId}}" hidden>
+    <div class="Yorder">
+      <table>
+        <tr>
+          <th colspan="2">Your order</th>
+        </tr>
+        <tr>
+          <td>Total Amount</td>
+          <td>Rs {{total.totalAmount}}</td>
+        </tr>
+      </table><br>
+      <div>
+        <input type="radio" name="payment-method" value="COD"> Cash on Delivery
+      </div>
+      <div>
+        <input type="radio" name="payment-method" value="ONLINE"> Paypal
+        <span>
+          <img src="https://www.logolynx.com/images/logolynx/c3/c36093ca9fb6c250f74d319550acac4d.jpeg" alt=""
+            width="50">
+        </span>
+      </div>
+      <button type="button" class="btn btn-primary" id="checkout-button">Checkout</button>
+    </div><!-- Yorder -->
+    </form>
+  </div>
+</div>
+{{!--
+<script>
+  $("#checkout-form").submit((e) => {
+    e.preventDefault()
+    $.ajax({
+      url: '/place-order',
+      data: $('#checkout-form').serialize(),
+      success: (response) => {
+        alert(response)
+      }
+    })
+  })
+</script> --}}
+<script>
+  $("#checkout-button").click(() => {
+    $.ajax({
+      url: '/place-order',
+      data: $('#checkout-form').serialize(),
+      type: 'POST', // Make sure to specify the HTTP method
+      success: (response) => {
+        alert(response);
+        if(response.status){
+          location.href='/order-success'
+        }
+      }
+    });
+  });
+
+</script>
